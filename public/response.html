@@ -1,0 +1,125 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <label id="count-label">{{.current}}/{{.total}}</label>
+    <div id="top-cont">
+        <textarea class="tbox" id="original">{{.original}}</textarea>
+        <textarea class="tbox" id="modified">{{.modified}}</textarea>
+    </div>
+    <div id="bottom-cont"></div>
+    <button id="submitBtn" class="form-control">Next</button>
+</body>
+<script>
+    let questions = JSON.parse('{{.questions}}').questions
+    var i = 0
+    questions.forEach(question => {
+        let qDiv = $('<div>', {class: 'question', id: 'q' + i})
+        qDiv.css({'margin-bottom': '20px'})
+
+        let title = $('<label>', {class: 'qtitle'})
+        title.text(question.title)
+        let cDiv = $('<div>', {class: 'qoptions'})
+        var j = 0
+        question.choices.forEach(option => {
+            let optDiv = $('<div>')
+
+            let radio = $('<input>', {type: 'radio', id: 'q'+i+'c'+j, name: 'q' + i, value: 'c' + j})
+            radio.css({'display': 'inline-block', 'margin': '0 20px 0 10px'})
+
+            let radioLabel = $('<weak>', {for: 'q'+i+'c'+j})
+            radioLabel.text(option)
+            radioLabel.css({'display': 'inline-block'})
+
+            optDiv.append(radio)
+            optDiv.append(radioLabel)
+            cDiv.append(optDiv)
+            j += 1
+        })
+        qDiv.append(title)
+        qDiv.append(cDiv)
+        $('#bottom-cont').append(qDiv)
+        i += 1
+    });
+
+    $('#submitBtn').click(() => {
+        var selectedVals = []
+        for (var i = 0; i < 12; i++) {
+            var radios = document.getElementsByName('q'+i)
+            for (var j = 0; j < radios.length; j++) {
+                if (radios[j].checked) {
+                    selectedVals.push(j)
+                    break
+                }
+            }
+        }
+        if (selectedVals.length != 12) {
+            alert('Please answer all of the questions.')
+            return
+        }
+        $.ajax({
+            url: '{{.host}}/sendResponse?answers=' + selectedVals.join('-') + '&n=' + '{{.current}}' + '&user=' + '{{.user}}',
+            method: 'POST',
+            error: (err) => {
+                alert(err.responseText)
+                return
+            },
+            success: () => {
+                nextRes()
+            }
+        })
+
+        var nextRes = () => {
+            if (parseInt('{{.current}}') == parseInt('{{.total}}')) {
+                window.location.href = '{{.host}}/finished'
+                return
+            }
+            window.location.href = '{{.host}}/response?n=' + (parseInt('{{.current}}')+1) + '&user=' + '{{.user}}'
+        }
+    })
+</script>
+<style>
+    #submitBtn {
+        float: right;
+        border: 2px solid black;
+        border-radius: 4px;
+        width: 10%;
+        margin-right: 5%;
+        margin-top: 15px;
+        font-weight: 600;
+    }
+    body {
+        overflow: hidden;
+    }
+    #bottom-cont {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 5px 5px 5px 5px;
+        border: 1.5px solid black;
+        overflow-y: scroll;
+        height: 61%;
+    }
+    #count-label {
+        float: right;
+        margin: 0 1% 0 0;
+    }
+    #top-cont {
+        margin: 2.5% 5% 2.5% 5%;
+        width: 90%;
+        height: 25%;
+    }
+    .tbox {
+        height: 100%;
+        font-size: 1.35em;
+    }
+    #original {
+        width: 40%;
+        margin-left: 5%;
+        margin-right: 4.5%;
+    }
+    #modified {
+        width: 40%;
+        margin-right: 5%;
+    }
+</style>

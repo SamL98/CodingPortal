@@ -1,0 +1,65 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="form">
+        <h1 class="col-md-6">Login:</h1>
+        <input class="form-control" type="text" name="password" value="" placeholder="Enter your password" id="pwdField" />
+        <button class="form-control" id="submitBtn">Submit</button>
+    </div>
+</body>
+<style>
+    h1 {
+        margin-top: 2%;
+        vertical-align: middle;
+    }
+    #form {
+        margin: 5% 20% 0 20%;
+    }
+    #submitBtn {
+        margin-top: 15px;
+    }
+</style>
+<script>
+    window.onload = () => {
+        $('#submitBtn').prop('disabled', true)
+        $('#pwdField').on('input', () => {
+            if ($('#pwdField').val() !== "") {
+                $('#submitBtn').prop('disabled', false)
+            } else {
+                $('#submitBtn').prop('disabled', true)
+            }
+        })
+        $('#pwdField').on('keypress', (e) => {
+            if (!$('#submitBtn').prop('disabled') && e.keyCode == '13') {
+                submit()
+            }
+        })
+        
+        var submit = () => {
+            $.ajax({
+                url: "{{.host}}/sendLogin?password=" + $('#pwdField').val(),
+                method: "POST",
+                error: (err) => {
+                    let errMsg = document.createElement('label')
+                    errMsg.innerHTML = err.responseText
+                    document.getElementById('form').appendChild(errMsg)
+                    $('label').css({'color': 'red'})
+                    document.getElementById('submitBtn').disabled = true
+                },
+                success: () => {
+                    let userStr = $('#pwdField').val()
+                    let user = userStr[userStr.length-1]
+                    if (user == 0) {
+                        window.location.href = '{{.host}}/seeAll'
+                        return
+                    }
+                    window.location.href = "{{.host}}/response?n=1&user=" + user
+                }
+            })
+        }
+        $('#submitBtn').on('click', submit)
+    }
+</script>
