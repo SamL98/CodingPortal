@@ -82,8 +82,8 @@ func main() {
 	passwords[2] = "second-user2"
 
 	envvars = getEnv()
-	//dbURL := envvars["CP_DB_URL"]
-	dbURL := "user=samlerner dbname=cp sslmode=disable"
+	dbURL := envvars["CP_DB_URL"]
+	//dbURL := "user=samlerner dbname=cp sslmode=disable"
 	port := envvars["PORT"]
 	addr := ":" + port
 	host = envvars["HOST"]
