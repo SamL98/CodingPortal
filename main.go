@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 type question struct {
@@ -97,14 +99,16 @@ func main() {
 	originals = getArticles(db, "Originals")
 	modified = getArticles(db, "Modified")
 
-	http.HandleFunc("/", login)
-	http.HandleFunc("/sendLogin", sendLogin)
-	http.HandleFunc("/response", response)
-	http.HandleFunc("/sendResponse", sendResponse)
-	http.HandleFunc("/finished", finished)
-	http.HandleFunc("/seeAll", seeAll)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", login)
+	mux.HandleFunc("/sendLogin", sendLogin)
+	mux.HandleFunc("/response", response)
+	mux.HandleFunc("/sendResponse", sendResponse)
+	mux.HandleFunc("/finished", finished)
+	mux.HandleFunc("/seeAll", seeAll)
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	handler := cors.Default().Handler(mux)
+	if err := http.ListenAndServe(addr, handler); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
