@@ -33,7 +33,7 @@ func close(db *sql.DB) {
 func getArticles(db *sql.DB, table string) []article {
 	arts := make([]article, 0)
 
-	rows, err := db.Query(fmt.Sprintf("select id, article_id, text, user_id from %s", table))
+	rows, err := db.Query(fmt.Sprintf("select id, article_id, text, user_id from %s where coded=false", table))
 	if err != nil {
 		log.Fatal(fmt.Sprintf("error querying for %s", table, err))
 		return arts
