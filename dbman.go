@@ -52,7 +52,7 @@ func getArticles(db *sql.DB, table string) []article {
 }
 
 func saveAnswers(db *sql.DB, a article, answers []int) {
-	queryStr := "update Modified set "
+	queryStr := "update Modified set coded=true, "
 	for i, answer := range answers {
 		queryStr = fmt.Sprintf("%sq%d=%d", queryStr, i+1, answer)
 		if i < len(answers)-1 {
