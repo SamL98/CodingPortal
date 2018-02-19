@@ -84,8 +84,8 @@ func main() {
 	passwords[2] = "second-user2"
 
 	envvars = getEnv()
-	dbURL := envvars["CP_DB_URL"]
-	//dbURL := "user=samlerner dbname=cp sslmode=disable"
+	//dbURL := envvars["CP_DB_URL"]
+	dbURL := "user=samlerner dbname=cp sslmode=disable"
 	port := envvars["PORT"]
 	addr := ":" + port
 	host = envvars["HOST"]
@@ -96,8 +96,8 @@ func main() {
 	}
 	defer close(db)
 
-	originals = getArticles(db, "Originals")
-	modified = getArticles(db, "Modified")
+	//originals = getArticles(db, "Originals")
+	//modified = getArticles(db, "Modified")
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", login)

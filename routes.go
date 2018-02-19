@@ -39,6 +39,10 @@ func sendLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	originals = getArticles(db, "Originals")
+	modified = getArticles(db, "Modified")
+	log.Println(len(modified))
+
 	for user, pass := range passwords {
 		if pass == password {
 			modTmp := make([]article, 0)
