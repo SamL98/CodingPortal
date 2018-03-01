@@ -94,12 +94,13 @@ func getAnswers(db *sql.DB) [][]string {
 		answer[3] = fmt.Sprintf("\"%s\"", row[3].(string))
 		answer[4] = fmt.Sprintf("\"%d\"", int(row[4].(int64)))
 		answer[5] = fmt.Sprintf("\"%s\"", row[5].(string))
+		answer[6] = fmt.Sprintf("\"%d\"", int(row[6].(int64)))
 		for i := 0; i < 12; i++ {
-			if row[i+6] == nil {
-				answer[i+6] = "N/A"
+			if row[i+7] == nil {
+				answer[i+7] = "N/A"
 				continue
 			}
-			answer[i+6] = fmt.Sprintf("\"%d\"", int(row[i+6].(int64)))
+			answer[i+7] = fmt.Sprintf("\"%d\"", int(row[i+7].(int64)))
 		}
 		answers = append(answers, answer)
 	}
