@@ -101,7 +101,7 @@ func getAnswers(db *sql.DB) [][]string {
 			}
 			answer[i+6] = fmt.Sprintf("%d", int(row[i+6].(int64)))
 		}
-		answer[1] = fmt.Sprintf("\"%s\"", answer[1])
+		answer[1] = fmt.Sprintf("\\\"%s\\\"", answer[1])
 		answers = append(answers, answer)
 	}
 	return answers
