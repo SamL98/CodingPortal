@@ -88,20 +88,19 @@ func getAnswers(db *sql.DB) [][]string {
 			return answers
 		}
 		answer := make([]string, 19)
-		answer[0] = row[0].(string)
-		answer[1] = row[1].(string)
-		answer[2] = fmt.Sprintf("%d", int(row[2].(int64)))
-		answer[3] = row[3].(string)
-		answer[4] = fmt.Sprintf("%d", int(row[4].(int64)))
-		answer[5] = row[5].(string)
+		answer[0] = fmt.Sprintf("\"%s\"", row[0].(string))
+		answer[1] = fmt.Sprintf("\"%s\"", row[1].(string))
+		answer[2] = fmt.Sprintf("\"%d\"", int(row[2].(int64)))
+		answer[3] = fmt.Sprintf("\"%s\"", row[3].(string))
+		answer[4] = fmt.Sprintf("\"%d\"", int(row[4].(int64)))
+		answer[5] = fmt.Sprintf("\"%s\"", row[5].(string))
 		for i := 0; i < 12; i++ {
 			if row[i+6] == nil {
 				answer[i+6] = "N/A"
 				continue
 			}
-			answer[i+6] = fmt.Sprintf("%d", int(row[i+6].(int64)))
+			answer[i+6] = fmt.Sprintf("\"%d\"", int(row[i+6].(int64)))
 		}
-		answer[1] = fmt.Sprintf("\\\"%s\\\"", answer[1])
 		answers = append(answers, answer)
 	}
 	return answers
