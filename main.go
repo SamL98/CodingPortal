@@ -42,7 +42,7 @@ func seedQuestions() {
 		[]string{"Yes", "No", "Did not mention an individual"},
 	}
 	questions[4] = question{
-		"Individual 1: Did they provide the CORRECT support or opposition for the first individual?",
+		"Individual 1: Did they provide the CORRECT support or opposition for the first individual? In order for it to be coded correct it MUST attach the correct identification of expertise as well as their stance.",
 		[]string{"Yes", "No", "Did not mention an individual"},
 	}
 	questions[5] = question{
@@ -50,7 +50,7 @@ func seedQuestions() {
 		[]string{"Yes", "No", "Did not mention an individual"},
 	}
 	questions[6] = question{
-		"Individual 1: Did they provide the correct argument for the first individual?",
+		"Individual 1: Did they provide the CORRECT argument for the first individual? In order for it to be coded as correct it MUST attach the correct identification of expertise as well as the correct argument.",
 		[]string{"Yes", "No", "Did not mention an individual"},
 	}
 	questions[7] = question{
@@ -62,7 +62,7 @@ func seedQuestions() {
 		[]string{"Yes", "No", "Did not mention a second individual"},
 	}
 	questions[9] = question{
-		"Individual 2: Did they provide the CORRECT support or opposition for the first individual?",
+		"Individual 2: Did they provide the CORRECT support or opposition for the second individual? In order for it to be coded as correct it MUST Attach the correct identification of expertise as well as their stance.",
 		[]string{"Yes", "No", "Did not mention a second individual"},
 	}
 	questions[10] = question{
@@ -70,7 +70,7 @@ func seedQuestions() {
 		[]string{"Yes", "No", "Did not mention a second individual"},
 	}
 	questions[11] = question{
-		"Individual 2: Did they provide the correct argument for the first individual?",
+		"Individual 2: Did they provide the CORRECT argument for the second individual? In order for it to be coded as correct it MUST attach the correct identification of expertise as well as the correct argument",
 		[]string{"Yes", "No", "Did not mention a second individual"},
 	}
 }
