@@ -67,11 +67,11 @@ func seedQuestions() {
 	}
 	questions[10] = question{
 		"Individual 2: Did they provide an argument for their position?",
-		[]string{"Yes", "No", "Did not mention a second individual"},
+		[]string{"Yes", "No", "Did not mention a second individual", "Same indication/argument as individual 1 (plural)"},
 	}
 	questions[11] = question{
 		"Individual 2: Did they provide the CORRECT argument for the second individual? In order for it to be coded as correct it MUST attach the correct identification of expertise as well as the correct argument",
-		[]string{"Yes", "No", "Did not mention a second individual"},
+		[]string{"Yes", "No", "Did not mention a second individual", "Same indication/argument as individual 1 (plural)"},
 	}
 }
 
